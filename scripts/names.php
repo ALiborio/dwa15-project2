@@ -47,7 +47,7 @@ if (isset($_POST['startLetter'])) {
 		$startLetter = $_POST['startLetter'];
 	} else {
 		if ($_POST['startLetter'] != '') {
-			$error = 'Must be a valid letter to start with.';
+			$error = 'Invalid character: <strong>'.$_POST['startLetter'].'</strong> Must be a valid letter to start with. Start with letter ignored.';
 		}
 		$startLetter = '';
 	}
@@ -75,7 +75,7 @@ if ($startLetter != '') {
 	}
 	# find out if we have enough names
 	if (count($fnameList) == 0) {
-		$error = 'No names start with the given letter.';
+		$error = 'No names start with the letter <strong>'.$startLetter.'</strong>.';
 		return;
 	} 
 

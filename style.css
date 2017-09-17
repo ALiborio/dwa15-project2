@@ -1,15 +1,50 @@
 body {
 	background-color: #e3e7ed;
-	color: #262e47;
+	color: #0e187c;
 	font-family: Verdana, Geneva, sans-serif;
 	text-align: center;
+	font-size: 1.1em;
 }
 
 form {
 	text-align: left;
+	width: 50%;
+	margin: 15px auto;
+	padding: 10px;
+}
+
+hr {
+	width: 75%;
+	border-color: #0e187c;
 }
 
 .main-container {
+	background-color: #65aed3;
 	width: 50%;
 	margin: auto;
+	padding: 10px;
+	border-radius: 10px;
+}
+
+.input {
+	margin: 5px;
+	border-radius: 5px;
+}
+
+.display {
+	margin: 15px auto;
+	padding: 10px;
+	width: 75%;
+	border-radius: 7px;
+}
+
+.name {
+	background-color: #3fdb78;
+	font-size: 1.2em;
+}
+
+.error {
+	background-color: #d1381d;
+	color: #3d3e42;
+	font-style: oblique;
 }
