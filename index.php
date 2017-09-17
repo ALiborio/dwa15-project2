@@ -20,6 +20,7 @@
 			<div class="input">
 				<label for="origin">Origin: </label>
 				<select name="origin" id="origin">
+					<option value="any" <?php if ($origin == 'any') echo 'selected'; ?>>Any</option>
 					<?php foreach ($originList as $index => $originValue) : ?>
 						<option value="<?=$originValue?>" <?php if ($origin == $originValue) echo 'selected'; ?>><?= ucfirst($originValue)?></option>
 					<?php endforeach; ?>
@@ -56,7 +57,7 @@
 			</div>
 		<?php endif; ?>
 
-		<?php if ($name != '') : ?>
+		<?php if (isset($name)) : ?>
 			<div class="name display">
 				<?=$name?>
 			</div>
