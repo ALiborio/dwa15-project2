@@ -66,6 +66,7 @@ if (empty($_POST)) {
 	return;
 }
 # Generate first name
+$fnameList = array();
 if ($startLetter != '') {
 	foreach ($dictionary[$gender] as $dictKey => $dictName) {
 		if (substr($dictName, 0, 1) == ucfirst($startLetter)) {
@@ -89,7 +90,7 @@ if (!$generateMiddle) {
 		$name .= " ".$surname;
 	}
 	return;
-} elseif (alliterative) {
+} elseif ($alliterative) {
 	foreach ($dictionary[$gender] as $dictKey => $dictName) {
 		if (substr($dictName, 0, 1) == substr($name, 0, 1)) {
 			array_push($fnameList, $dictionary[$gender][$dictKey]);
