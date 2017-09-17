@@ -1,0 +1,15 @@
+body {
+	background-color: #e3e7ed;
+	color: #262e47;
+	font-family: Verdana, Geneva, sans-serif;
+	text-align: center;
+}
+
+form {
+	text-align: left;
+}
+
+.main-container {
+	width: 50%;
+	margin: auto;
+}
