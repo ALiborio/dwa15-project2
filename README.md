@@ -6,9 +6,9 @@ This page will generate a name based on the input entered.
 
 The surname field will be appended to the end of the generated name so the whole name will be displayed. If no surname is entered, only the generated name(s) will be displayed.
 
-The origin field determines which origin dictionary we will use to generate the names. Each choice here corresponds to a json file in the dictionaries folder. See ***Dictionary Files*** heading below for more details on the format of these files.
+The origin field determines which origin dictionary we will use to generate the names. Each choice here corresponds to a json file in the dictionaries folder. See [Dictionary Files](#dictionary-files) heading below for more details on the format of these files.
 
-The gender radio buttons allow switching between gender specific names. Neutral will return names generally considered unisex, while male and female will only return names generally considered to be associated with those genders respectively. The name lists are separated out by these genders. See the ***Dictionary Files*** heading below.
+The gender radio buttons allow switching between gender specific names. Neutral will return names generally considered unisex, while male and female will only return names generally considered to be associated with those genders respectively. The name lists are separated out by these genders. See [Dictionary Files](#dictionary-files).
 
 The generate middle name checkbox determines whether a middle name will also be generated. If this is unchecked, only the first name will be generated. If it is checked, it will also generate a middle name, ensuring it is different from the first name.
 
