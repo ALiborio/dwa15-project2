@@ -3,7 +3,7 @@
 function generateName (&$list) {
 	$key = array_rand($list);
 	$name = $list[$key];
-	array_splice($list, $key, 1);
+	unset($list[$key]);
 	return $name;
 }
 
