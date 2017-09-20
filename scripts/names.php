@@ -1,81 +1,5 @@
 <?php include ('helpers.php');
 
-# Setup the originList from the dictionaries in the directory
-
-$dictDirectory = $_SERVER['DOCUMENT_ROOT'].'/dictionaries/';
-$originList = scandir($dictDirectory);
-
-foreach ($originList as $index => $file) {
-	if (substr($file, -5) != '.json') {
-		unset($originList[$index]);
-	} else {
-		$originList[$index] = substr($file, 0, -5);
-	}
-}
-
-# setup variables from $_POST or defaults on initial page load
-
-if (isset($_POST['surname'])) {
-	$surname = $_POST['surname'];
-} else {
-	$surname = '';
-}
-
-if (isset($_POST['origin'])) {
-	$origin = $_POST['origin'];
-} else {
-	$origin = 'any';
-}
-
-
-if (isset($_POST['gender'])) {
-	$gender = $_POST['gender'];
-} else {
-	$gender = 'neutral';
-}
-
-if (isset($_POST['middle'])) {
-	$generateMiddle = isset($_POST['middle']);
-} else {
-	$generateMiddle = false;
-}
-
-$alliterative = isset($_POST['alliterative']);
-
-if (isset($_POST['startLetter'])) {
-	if (ctype_alpha($_POST['startLetter'])) {
-		$startLetter = $_POST['startLetter'];
-	} else {
-		if ($_POST['startLetter'] != '') {
-			$error = 'Invalid character: <strong>'.$_POST['startLetter'].'</strong> Must be a valid letter to start with. Start with letter ignored.';
-		}
-		$startLetter = '';
-	}
-} else {
-	$startLetter = '';
-}
-
-if (empty($_POST)) {
-	# default middle checked
-	$generateMiddle = true;
-	return;
-}
-
-$nameList = array();
-if ($origin == 'any') {
-	foreach ($originList as $dictKey => $dictName) {
-		$dictionaryJson = file_get_contents($dictDirectory.$dictName.'.json');
-		$dictionary = json_decode($dictionaryJson,true);
-		$nameList = array_merge($nameList,$dictionary[$gender]);
-	}
-	$nameList = array_unique($nameList);
-
-} else {
-	$dictionaryJson = file_get_contents($dictDirectory.$origin.'.json');
-	$dictionary = json_decode($dictionaryJson,true);
-	$nameList = $dictionary[$gender];
-}
-
 function generateName (&$list) {
 	$key = array_rand($list);
 	$name = $list[$key];
@@ -98,6 +22,89 @@ function filterList($list, $letter) {
 	return $list;
 }
 
+function filenameExternal ($filename) {
+	$filename = str_replace("_", " ", $filename);
+	return ucwords($filename);
+}
+
+# Setup the sourceList from the dictionaries in the directory
+
+$dictDirectory = $_SERVER['DOCUMENT_ROOT'].'/dictionaries/';
+$sourceList = scandir($dictDirectory);
+
+foreach ($sourceList as $index => $file) {
+	if (substr($file, -5) != '.json') {
+		unset($sourceList[$index]);
+	} else {
+		$sourceList[$index] = substr($file, 0, -5);
+	}
+}
+
+# setup variables from $_GET or defaults on initial page load
+
+if (isset($_GET['source'])) {
+	$source = $_GET['source'];
+} else {
+	$source = 'any';
+}
+
+
+if (isset($_GET['gender'])) {
+	$gender = $_GET['gender'];
+} else {
+	$gender = 'neutral';
+}
+
+if (isset($_GET['middle'])) {
+	$generateMiddle = isset($_GET['middle']);
+} else {
+	$generateMiddle = false;
+}
+
+$alliterative = isset($_GET['alliterative']);
+
+if (isset($_GET['startLetter'])) {
+	if (ctype_alpha($_GET['startLetter'])) {
+		$startLetter = $_GET['startLetter'];
+	} else {
+		if ($_GET['startLetter'] != '') {
+			$error = 'Invalid character: <strong>'.$_GET['startLetter'].'</strong> Must be a valid letter to start with. Start with letter ignored.';
+		}
+		$startLetter = '';
+	}
+} else {
+	$startLetter = '';
+}
+
+if (isset($_GET['surname'])) {
+	$surname = $_GET['surname'];
+} else {
+	$surname = '';
+}
+
+# default generate middle name as checked on intial load
+if (empty($_GET)) {
+	$generateMiddle = true;
+	return;
+}
+
+# setup the nameList array we will be using to pull names from
+$nameList = array();
+if ($source == 'any') {
+	foreach ($sourceList as $dictKey => $dictName) {
+		$dictionaryJson = file_get_contents($dictDirectory.$dictName.'.json');
+		$dictionary = json_decode($dictionaryJson,true);
+		$nameList = array_merge($nameList,$dictionary[$gender]);
+	}
+	$nameList = array_unique($nameList);
+
+} else {
+	$dictionaryJson = file_get_contents($dictDirectory.$source.'.json');
+	$dictionary = json_decode($dictionaryJson,true);
+	$nameList = $dictionary[$gender];
+}
+
+# Actually generate a name
 if ($alliterative) {
 	# If alliterative, we will just filter the entire name list up front
 	# determine the start letter, so we know how to filter
@@ -131,6 +138,10 @@ if ($alliterative) {
 	$name = generateName($fnameList);
 	removeFromList($nameList,$name);
 } else {
+	if (count($nameList) == 0) {
+			$error = 'No names fit the given criteria.';
+			return;
+		}
 	$name = generateName($nameList);
 }
 
@@ -142,7 +153,7 @@ if (!$generateMiddle) {
 } elseif ($alliterative) {
 		if ($aLetter != '') {
 			if (count($nameList) == 0) {
-				$error = 'No unique middle names start with the letter <strong>'.sanitize($aLetter).'</strong>.';
+				$error = 'No unique middle names start with the letter <strong>'.sanitize($aLetter).'</strong>. No middle name could be generated.';
 				# if we have a surname, just output it with the first name
 				if ($surname) {
 					$name .= " ".sanitize($surname);

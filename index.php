@@ -12,17 +12,13 @@
 
 		<hr>
 
-		<form method="POST" action="\">
+		<form method="GET" action="\">
 			<div class="input">
-				<label for="surname">Surname: </label>
-				<input type="text" name="surname" id="surname" value="<?=sanitize($surname)?>">
-			</div>
-			<div class="input">
-				<label for="origin">Origin: </label>
-				<select name="origin" id="origin">
-					<option value="any" <?php if ($origin == 'any') echo 'selected'; ?>>Any</option>
-					<?php foreach ($originList as $index => $originValue) : ?>
-						<option value="<?=$originValue?>" <?php if ($origin == $originValue) echo 'selected'; ?>><?= ucfirst($originValue)?></option>
+				<label for="source">Name list to use: </label>
+				<select name="source" id="source">
+					<option value="any" <?php if ($source == 'any') echo 'selected'; ?>>Any</option>
+					<?php foreach ($sourceList as $index => $sourceValue) : ?>
+						<option value="<?=$sourceValue?>" <?php if ($source == $sourceValue) echo 'selected'; ?>><?= filenameExternal($sourceValue)?></option>
 					<?php endforeach; ?>
 				</select>
 			</div>
@@ -46,7 +42,13 @@
 				<label for="startLetter">Start with letter: </label>
 				<input type="text" name="startLetter" id="startLetter" maxlength="1" size="1" value="<?=$startLetter?>">
 			</div>
-			<input type="submit" value="Generate!" class="btn">
+			<div class="input">
+				<label for="surname">Surname: </label>
+				<input type="text" name="surname" id="surname" value="<?=sanitize($surname)?>">
+			</div>
+			<div class="input">
+				<input type="submit" value="Generate!" class="btn">
+			</div>
 		</form>
 
 		<hr>
