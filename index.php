@@ -46,7 +46,7 @@
 				<label for="surname">Surname: </label>
 				<input type="text" name="surname" id="surname" value="<?=sanitize($surname)?>">
 			</div>
-			<div class="input">
+			<div class="input button">
 				<input type="submit" value="Generate!" class="btn">
 			</div>
 		</form>

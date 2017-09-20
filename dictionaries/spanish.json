@@ -1,5 +1,5 @@
 {
-	"neutral" : ["Aba","Adonia","Aldo","Alfonso","Alfredo","Alta","Amor","Andrea","Aquilina","Ario","Belen","Bennie","Benny","Blas","Briand","Calvin","Calvino","Carmen","Casey","Ceri","Claudio","Concepcion","Concha","Connie","Consuelo","Cris","Cristian"],
+	"neutral" : ["Aba","Adonia","Aldo","Alta","Amor","Aquilina","Ario","Belen","Bennie","Benny","Blas","Briand","Calvin","Calvino","Carmen","Casey","Ceri","Concepcion","Concha","Connie","Consuelo","Cris","Cristian"],
 	"male" : ["Alejandro","Andre","Carlos","Diego","Esteban","Jose","Juan","Manuel","Mateo","Matías","Miguel","Nicolás","Santiago","Sebastián"],
-	"female" : ["Alejandra","Camila","Catalina","Isabella","Jimena","Luciana","Maria","Mariana","Sofía","Valentina","Valeria","Ximena"]
+	"female" : ["Alejandra","Camila","Catalina","Isabella","Ines","Jimena","Luciana","Maria","Mariana","Sofía","Valentina","Valeria","Ximena"]
 }

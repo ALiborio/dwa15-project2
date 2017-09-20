@@ -1,16 +1,24 @@
 body {
 	background-color: #e3e7ed;
 	color: #0e187c;
-	font-family: Verdana, Geneva, sans-serif;
+	font-family: Georgia, Times, Times New Roman, serif;
 	text-align: center;
 	font-size: 1.1em;
 }
 
 form {
 	text-align: left;
-	width: 50%;
+	width: 60%;
 	margin: 15px auto;
 	padding: 10px;
+}
+
+input {
+	border-radius: 5px;
+}
+
+label {
+	margin-right: 5px;
 }
 
 hr {
@@ -19,16 +27,20 @@ hr {
 }
 
 .main-container {
-	background-color: #65aed3;
+	background-color: #559ec3;
 	width: 50%;
 	margin: auto;
 	padding: 10px;
-	border-radius: 10px;
+	border-radius: 5px;
+	border: 1px solid #0e187c;
 }
 
 .input {
 	margin: 5px;
-	border-radius: 5px;
+}
+
+.button {
+	text-align: center;
 }
 
 .display {
