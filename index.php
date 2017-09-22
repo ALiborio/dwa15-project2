@@ -12,7 +12,7 @@
 
 		<hr>
 
-		<form method="GET" action="\">
+		<form method="GET">
 			<div class="input">
 				<label for="source">Name list to use: </label>
 				<select name="source" id="source">
