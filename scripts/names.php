@@ -1,18 +1,25 @@
-<?php include ('helpers.php');
+<?php 
+require('helpers.php');
+require('Dictionary.php');
 
-function generateName (&$list) {
+use DWA\Project2\Dictionary;
+
+function generateName (&$list)
+{
 	$key = array_rand($list);
 	$name = $list[$key];
 	unset($list[$key]);
 	return $name;
 }
 
-function removeFromList(&$list, $value) {
+function removeFromList(&$list, $value)
+{
 	$key = array_search($value, $list);
 	array_splice($list, $key, 1);
 }
 
-function filterList($list, $letter) {
+function filterList($list, $letter)
+{
 	foreach ($list as $key => $val) {
 		if (substr($val, 0, 1) != ucfirst($letter)) {
 			unset($list[$key]);
@@ -22,23 +29,10 @@ function filterList($list, $letter) {
 	return $list;
 }
 
-function filenameExternal ($filename) {
-	$filename = str_replace("_", " ", $filename);
-	return ucwords($filename);
-}
-
 # Setup the sourceList from the dictionaries in the directory
 
-$dictDirectory = $_SERVER['DOCUMENT_ROOT'].'/dictionaries/';
-$sourceList = scandir($dictDirectory);
-
-foreach ($sourceList as $index => $file) {
-	if (substr($file, -5) != '.json') {
-		unset($sourceList[$index]);
-	} else {
-		$sourceList[$index] = substr($file, 0, -5);
-	}
-}
+$dictionary = new Dictionary($_SERVER['DOCUMENT_ROOT'].'/dictionaries/');
+$sourceList = $dictionary->getDictList();
 
 # setup variables from $_GET or defaults on initial page load
 
@@ -67,7 +61,7 @@ if (isset($_GET['startLetter'])) {
 	if (ctype_alpha($_GET['startLetter'])) {
 		$startLetter = $_GET['startLetter'];
 	} else {
-		if ($_GET['startLetter'] != '') {
+		if ($_GET['startLetter'] != '')	{
 			$error = 'Invalid character: <strong>'.$_GET['startLetter'].'</strong> Must be a valid letter to start with. Start with letter ignored.';
 		}
 		$startLetter = '';
@@ -89,20 +83,7 @@ if (empty($_GET)) {
 }
 
 # setup the nameList array we will be using to pull names from
-$nameList = array();
-if ($source == 'any') {
-	foreach ($sourceList as $dictKey => $dictName) {
-		$dictionaryJson = file_get_contents($dictDirectory.$dictName.'.json');
-		$dictionary = json_decode($dictionaryJson,true);
-		$nameList = array_merge($nameList,$dictionary[$gender]);
-	}
-	$nameList = array_unique($nameList);
-
-} else {
-	$dictionaryJson = file_get_contents($dictDirectory.$source.'.json');
-	$dictionary = json_decode($dictionaryJson,true);
-	$nameList = $dictionary[$gender];
-}
+$nameList = $dictionary->readFromDict($source, $gender);
 
 # Actually generate a name
 if ($alliterative) {

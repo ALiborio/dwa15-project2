@@ -18,7 +18,7 @@
 				<select name="source" id="source">
 					<option value="any" <?php if ($source == 'any') echo 'selected'; ?>>Any</option>
 					<?php foreach ($sourceList as $index => $sourceValue) : ?>
-						<option value="<?=$sourceValue?>" <?php if ($source == $sourceValue) echo 'selected'; ?>><?= filenameExternal($sourceValue)?></option>
+						<option value="<?=$sourceValue?>" <?php if ($source == $sourceValue) echo 'selected'; ?>><?= $dictionary->filenameExternal($sourceValue)?></option>
 					<?php endforeach; ?>
 				</select>
 			</div>
