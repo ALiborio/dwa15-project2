@@ -1,10 +1,12 @@
 <?php 
 require('helpers.php');
 require('Dictionary.php');
+require('Form.php');
 
 use DWA\Project2\Dictionary;
+use DWA\Form;
 
-function generateName (&$list)
+function generateName(&$list)
 {
 	$key = array_rand($list);
 	$name = $list[$key];
@@ -34,50 +36,28 @@ function filterList($list, $letter)
 $dictionary = new Dictionary($_SERVER['DOCUMENT_ROOT'].'/dictionaries/');
 $sourceList = $dictionary->getDictList();
 
-# setup variables from $_GET or defaults on initial page load
+# get form data and validate it
+$form = new Form($_GET);
 
-if (isset($_GET['source'])) {
-	$source = $_GET['source'];
-} else {
-	$source = 'any';
-}
-
-
-if (isset($_GET['gender'])) {
-	$gender = $_GET['gender'];
-} else {
-	$gender = 'neutral';
-}
-
-if (isset($_GET['middle'])) {
-	$generateMiddle = isset($_GET['middle']);
-} else {
-	$generateMiddle = false;
-}
-
-$alliterative = isset($_GET['alliterative']);
-
-if (isset($_GET['startLetter'])) {
-	if (ctype_alpha($_GET['startLetter'])) {
-		$startLetter = $_GET['startLetter'];
-	} else {
-		if ($_GET['startLetter'] != '')	{
-			$error = 'Invalid character: <strong>'.$_GET['startLetter'].'</strong> Must be a valid letter to start with. Start with letter ignored.';
-		}
-		$startLetter = '';
+if ($form->isSubmitted()) {
+	$errors = $form->validate(
+		[
+			'surname' => 'alpha',
+			'startLetter' => 'alpha'
+		]
+	);
+	$source = $form->get('source');
+	$gender = $form->get('gender');
+	$generateMiddle = $form->isChosen('middle');
+	$alliterative = $form->isChosen('alliterative');
+	$startLetter = $form->get('startLetter','');
+	$surname = $form->get('surname','');
+	if ($form->hasErrors) {
+		return;
 	}
-} else {
-	$startLetter = '';
-}
 
-if (isset($_GET['surname'])) {
-	$surname = $_GET['surname'];
 } else {
-	$surname = '';
-}
-
-# default generate middle name as checked on intial load
-if (empty($_GET)) {
+	# default the generateMiddle checkbox if not submitted yet
 	$generateMiddle = true;
 	return;
 }

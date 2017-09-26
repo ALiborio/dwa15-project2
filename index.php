@@ -16,18 +16,18 @@
 			<div class="input">
 				<label for="source">Name list to use: </label>
 				<select name="source" id="source">
-					<option value="any" <?php if ($source == 'any') echo 'selected'; ?>>Any</option>
+					<option value="any" <?php if ($form->prefill('source', 'any') == 'any') echo 'selected'; ?>>Any</option>
 					<?php foreach ($sourceList as $index => $sourceValue) : ?>
-						<option value="<?=$sourceValue?>" <?php if ($source == $sourceValue) echo 'selected'; ?>><?= $dictionary->filenameExternal($sourceValue)?></option>
+						<option value="<?=$sourceValue?>" <?php if ($form->prefill('source', 'any') == $sourceValue) echo 'selected'; ?>><?= $dictionary->filenameExternal($sourceValue)?></option>
 					<?php endforeach; ?>
 				</select>
 			</div>
 			<div class="input">
-				<input type="radio" name="gender" id="neutral" value="neutral" <?php if ($gender == 'neutral') echo 'checked'; ?>>
+				<input type="radio" name="gender" id="neutral" value="neutral" <?php if ($form->prefill('gender', 'neutral') == 'neutral') echo 'checked'; ?>>
 				<label for="neutral">Neutral</label>
-				<input type="radio" name="gender" id="male" value="male" <?php if ($gender == 'male') echo 'checked'; ?>>
+				<input type="radio" name="gender" id="male" value="male" <?php if ($form->prefill('gender', 'neutral') == 'male') echo 'checked'; ?>>
 				<label for="male">Male</label>
-				<input type="radio" name="gender" id="female" value="female" <?php if ($gender == 'female') echo 'checked'; ?>>
+				<input type="radio" name="gender" id="female" value="female" <?php if ($form->prefill('gender', 'neutral') == 'female') echo 'checked'; ?>>
 				<label for="female">Female</label>
 			</div>
 			<div class="input">
@@ -35,16 +35,16 @@
 				<label for="middleName">Generate middle name</label>
 			</div>
 			<div class="input">
-				<input type="checkbox" name="alliterative" id="alliterative" <?php if ($alliterative) echo 'checked'; ?>>
+				<input type="checkbox" name="alliterative" id="alliterative" <?php if ($form->prefill('alliterative', false)) echo 'checked'; ?>>
 				<label for="alliterative">Generate alliterative names</label>
 			</div>
 			<div class="input">
 				<label for="startLetter">Start with letter: </label>
-				<input type="text" name="startLetter" id="startLetter" maxlength="1" size="1" value="<?=$startLetter?>">
+				<input type="text" name="startLetter" id="startLetter" maxlength="1" size="1" value="<?=$form->prefill('startLetter')?>">
 			</div>
 			<div class="input">
 				<label for="surname">Surname: </label>
-				<input type="text" name="surname" id="surname" value="<?=sanitize($surname)?>">
+				<input type="text" name="surname" id="surname" value="<?=$form->prefill('surname')?>">
 			</div>
 			<div class="input button">
 				<input type="submit" value="Generate!" class="btn">
@@ -53,11 +53,13 @@
 
 		<hr>
 
-		<?php if (isset($error)) : ?>
-			<div class="error display">
-				<?=$error?>
-			</div>
-		<?php endif; ?>
+		<?php if (isset($errors)) {
+			foreach ($errors as $errKey => $errMsg) { ?>
+			 	<div class="error display">
+					<?="The field ".ucwords($errKey).$errMsg?>
+				</div>
+			<?php } 
+		} ?>
 
 		<?php if (isset($name)) : ?>
 			<div class="name display">
