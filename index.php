@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>Name Generator</title>
+	<script src="https://use.fontawesome.com/623053ff70.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
@@ -56,14 +57,37 @@
 		<?php if (isset($errors)) {
 			foreach ($errors as $errKey => $errMsg) { ?>
 			 	<div class="error display">
-					<?="The field ".ucwords($errKey).$errMsg?>
+					<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
+					The field <?=ucwords($errKey).$errMsg?>
 				</div>
 			<?php } 
 		} ?>
 
+		<?php if (isset($firstLetterErr)) : ?>
+			<div class="error display">
+				<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
+				No names in the given criteria begin with <strong><?=$form->sanitize($firstLetterErr)?></strong>.
+			</div>
+		<?php endif; ?>
+
+		<?php if (isset($middleNameErr)) : ?>
+			<div class="error display">
+				<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
+				No unique middle names in the given criteria begin with <strong><?=$form->sanitize($middleNameErr)?></strong>.
+			</div>
+		<?php endif; ?>
+
+		<?php if (isset($noNamesErr)) : ?>
+			<div class="error display">
+				<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
+				No names fit the given criteria.
+			</div>
+		<?php endif; ?>
+
 		<?php if (isset($name)) : ?>
 			<div class="name display">
-				<?=$name?>
+				<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+				<?=$form->sanitize($name)?>
 			</div>
 		<?php endif; ?>
 		

@@ -1,5 +1,4 @@
 <?php 
-require('helpers.php');
 require('Dictionary.php');
 require('Form.php');
 
@@ -83,7 +82,7 @@ if ($alliterative) {
 	}
 
 	if (count($nameList) == 0) {
-			$error = 'No names start with the letter <strong>'.sanitize($aLetter).'</strong>.';
+			$firstLetterErr = $aLetter;
 			return;
 		}
 	$name = generateName($nameList);
@@ -93,14 +92,14 @@ if ($alliterative) {
 	$fnameList = filterList($nameList,$startLetter);
 
 	if (count($fnameList) == 0) {
-		$error = 'No names start with the letter <strong>'.sanitize($startLetter).'</strong>.';
+		$firstLetterErr = $startLetter;
 		return;
 	}
 	$name = generateName($fnameList);
 	removeFromList($nameList,$name);
 } else {
 	if (count($nameList) == 0) {
-			$error = 'No names fit the given criteria.';
+			$noNamesErr = true;
 			return;
 		}
 	$name = generateName($nameList);
@@ -114,10 +113,10 @@ if (!$generateMiddle) {
 } elseif ($alliterative) {
 		if ($aLetter != '') {
 			if (count($nameList) == 0) {
-				$error = 'No unique middle names start with the letter <strong>'.sanitize($aLetter).'</strong>. No middle name could be generated.';
+				$middleNameErr = $aLetter;
 				# if we have a surname, just output it with the first name
 				if ($surname) {
-					$name .= " ".sanitize($surname);
+					$name .= " ".$surname;
 				}
 				return;
 			}
@@ -125,10 +124,10 @@ if (!$generateMiddle) {
 		} else {
 			$nameList = filterList($nameList,substr($name, 0, 1));
 			if (count($nameList) == 0) {
-				$error = 'No unique middle names start with the letter <strong>'.substr($name, 0, 1).'</strong>.';
+				$middleNameErr = substr($name, 0, 1);
 				# if we have a surname, just output it with the first name
 				if ($surname) {
-					$name .= " ".sanitize($surname);
+					$name .= " ".$surname;
 				}
 				return;
 			}
@@ -139,5 +138,5 @@ if (!$generateMiddle) {
 }
 
 if ($surname) {
-	$name .= " ".sanitize($surname);
+	$name .= " ".$surname;
 }
