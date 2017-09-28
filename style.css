@@ -52,12 +52,12 @@ hr {
 
 .name {
 	background-color: #3fdb78;
-	font-size: 1.2em;
+	font-size: 1.3em;
 }
 
 .error {
 	background-color: #d1381d;
-	color: #3d3e42;
+	color: #0b1e3d;
 	font-style: oblique;
 }
 

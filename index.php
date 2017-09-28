@@ -1,4 +1,15 @@
-<?php require('scripts/names.php'); ?>
+<?php 
+require('scripts/names.php'); 
+#setup the field name mapping for error message output
+$fieldMap = [
+            'source' => 'Source',
+            'gender' => 'Gender',
+            'middle' => 'Generate middle name',
+            'alliterative' => 'Generate alliterative names',
+            'startLetter' => 'Start with letter',
+            'surname' => 'Surname',
+        ];
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,36 +69,40 @@
 			foreach ($errors as $errKey => $errMsg) { ?>
 			 	<div class="error display">
 					<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
-					The field <?=ucwords($errKey).$errMsg?>
+					The field <strong><?=$fieldMap[$errKey]?></strong><?=$errMsg?>
 				</div>
 			<?php } 
 		} ?>
 
-		<?php if (isset($firstLetterErr)) : ?>
+		<?php if (isset($nameGen->firstLetterErr)) : ?>
 			<div class="error display">
 				<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
-				No names in the given criteria begin with <strong><?=$form->sanitize($firstLetterErr)?></strong>.
+				No names in the given criteria begin with <strong><?=$form->sanitize($nameGen->firstLetterErr)?></strong>.
 			</div>
 		<?php endif; ?>
 
-		<?php if (isset($middleNameErr)) : ?>
+		<?php if (isset($nameGen->middleNameErr)) : ?>
 			<div class="error display">
 				<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
-				No unique middle names in the given criteria begin with <strong><?=$form->sanitize($middleNameErr)?></strong>.
+				No unique middle names in the given criteria begin with <strong><?=$form->sanitize($nameGen->middleNameErr)?></strong>.
 			</div>
 		<?php endif; ?>
 
-		<?php if (isset($noNamesErr)) : ?>
+		<?php if (isset($nameGen->noNamesErr)) : ?>
 			<div class="error display">
 				<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
 				No names fit the given criteria.
 			</div>
 		<?php endif; ?>
 
-		<?php if (isset($name)) : ?>
+		<?php if (isset($nameGen->firstName)) : ?>
 			<div class="name display">
 				<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-				<?=$form->sanitize($name)?>
+				<?php 
+					echo $nameGen->firstName." ";
+					if (isset($nameGen->middleName)) : echo $nameGen->middleName." "; endif;
+					echo $form->sanitize($surname);
+				?>
 			</div>
 		<?php endif; ?>
 		
