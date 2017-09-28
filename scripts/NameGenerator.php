@@ -1,9 +1,6 @@
-<?php
+<?
+
 namespace DWA\Project2;
-
-//require('Dictionary.php');
-
-// use 'DWA\Project2\Dictionary';
 
 class NameGenerator
 {
@@ -23,6 +20,7 @@ class NameGenerator
 
 	/**
     * Constructor
+    * 	Sets up the nameList from the dictionary provider for the given source and gender
     */
     public function __construct(Dictionary $dict, $source, $gender)
     {
@@ -31,27 +29,36 @@ class NameGenerator
     }
 
     /**
-    *
+    * returns the nameList
     */
     public function getNameList()
     {
     	return $this->nameList;
     }
 
-    public function generateName($list)
+    /**
+    * Generates a random name from the given $list
+    */
+    private function generateName($list)
     {
 		$key = array_rand($list);
 		$name = $list[$key];
 		return $name;
 	}
 
-	public function removeFromList(&$list, $value)
+	/**
+    * Removes the given $value from the given $list so we don't have duplicate names generated
+    */
+	private function removeFromList(&$list, $value)
 	{
 		$key = array_search($value, $list);
 		array_splice($list, $key, 1);
 	}
 
-	public function filterList($list, $letter)
+	/**
+    * Filters the given $list by the given $letter and returns the filtered $list
+    */
+	private function filterList($list, $letter)
 	{
 		foreach ($list as $key => $val)
 		{
@@ -64,7 +71,12 @@ class NameGenerator
 		return $list;
 	}
 
-	public function setupAlliterativeNames($startLetter, $surname)
+	/**
+    * Sets up the list for alliterative generation mode if we have a starting letter
+    *	$startLetter takes precedence over $surname for finding the alliterative letter
+    * Returns 'ok' if successful or 'error' if an error occurred
+    */
+    public function setupAlliterativeNames($startLetter = '', $surname = '')
 	{
 		if ($startLetter != '') {
 			$this->aLetter = $startLetter;
@@ -87,17 +99,20 @@ class NameGenerator
 		}
 	}
 
-	public function generateFirstName($startLetter='')
+	/**
+    * Generates the first name with the given $startLetter
+    * If in alliterative generation mode, $aLetter is already setup and will be used instead
+    * Returns 'ok' if successful or 'error' if an error occurred
+    */
+    public function generateFirstName($startLetter='')
 	{
 		if (count($this->nameList) == 0) {
 			$this->noNamesErr = true;
 			return 'error';
 		}
 
-		if ($this->aLetter != '') {
-			$this->firstName = $this->generateName($this->nameList);
-		} elseif ($startLetter != '') {
-			# else, if a start letter is defined, just filter the first name list, preserving the original list
+		if ($this->aLetter == '' && ($startLetter != '') {
+			# if a start letter is defined, just filter the first name list, preserving the original list
 			$fnameList = $this->filterList($this->nameList,$startLetter);
 
 			if (count($fnameList) == 0) {
@@ -112,7 +127,13 @@ class NameGenerator
 		return 'ok';
 	}
 
-	public function generateMiddleName($alliterative = false)
+	/**
+    * Generates the middle name
+    * If $alliterative and we don't already have $aLetter we will use the $firstName
+    * 	for our alliterative name generation logic.
+    * Returns 'ok' if successful or 'error' if an error occurred
+    */
+    public function generateMiddleName($alliterative = false)
 	{
 		if (count($this->nameList) == 0) {
 			$this->middleNameErr = $this->aLetter;
@@ -126,7 +147,7 @@ class NameGenerator
 				$this->middleNameErr = substr($this->firstName, 0, 1);
 				return 'error';
 			}
-			
+
 			$this->middleName = $this->generateName($mnameList);
 		} else {
 			$this->middleName = $this->generateName($this->nameList);

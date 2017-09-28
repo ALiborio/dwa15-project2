@@ -10,11 +10,11 @@ The gender radio buttons allow switching between gender specific names. Neutral 
 
 The generate middle name checkbox determines whether a middle name will also be generated. If this is unchecked, only the first name will be generated. If it is checked, it will also generate a middle name, ensuring it is different from the first name.
 
-The generate alliterative names will generate a name that is alliterative in nature. For example: *John Jacob*. If a surname is entered, the first letter will be used to attempt to generate an alliterative first name. However, if the start with letter is filled out, it will take precedence over the surname.
+The generate alliterative names will generate a name that is alliterative in nature. For example: *John Jacob*. If a surname is entered, the first letter will be used to attempt to generate an alliterative first name. However, if the start with letter is filled out, it will take precedence over the surname. At this time, this assumes that if the first letter of two names match, they are alliterative. So although it would not really be alliterative a name like *Juan Joseph* can be generated with alliterative names mode checked.
 
-The start with letter field accepts a single character. Only alphabetic characters will be allowed, if a non-alphabetic character is entered, an error will be displayed and it will be ignored. When a letter is entered in this field, it will only generate a first name that starts with that letter (case insensitive.)
+The start with letter field accepts a single character. Only alphabetic characters will be allowed, if a non-alphabetic character is entered, an error will be displayed and it will be ignored. When a letter is entered in this field, it will only generate a first name that starts with that letter (case insensitive.) When middle name and alliterative are checked as well, it will generate a middle name that matches this letter as well.
 
-The surname field will be appended to the end of the generated name so the whole name will be displayed. If no surname is entered, only the generated name(s) will be displayed.
+The surname field will be appended to the end of the generated name so the whole name will be displayed. If no surname is entered, only the generated name(s) will be displayed. If no start with letter is defined, the surname will be used for the alliterative name mode, so if *Johnson* is entered in the surname field, and both middle name and alliterative are checked, a name such as *John Jacob Johnson* would be generated.
 
 ### Dictionary Files
 

@@ -2,14 +2,15 @@
 require('scripts/names.php'); 
 #setup the field name mapping for error message output
 $fieldMap = [
-            'source' => 'Source',
-            'gender' => 'Gender',
-            'middle' => 'Generate middle name',
-            'alliterative' => 'Generate alliterative names',
-            'startLetter' => 'Start with letter',
-            'surname' => 'Surname',
-        ];
+    'source' => 'Source',
+    'gender' => 'Gender',
+    'middle' => 'Generate middle name',
+    'alliterative' => 'Generate alliterative names',
+    'startLetter' => 'Start with letter',
+    'surname' => 'Surname',
+];
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
