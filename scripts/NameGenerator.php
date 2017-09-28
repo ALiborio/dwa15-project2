@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace DWA\Project2;
 
@@ -111,7 +111,7 @@ class NameGenerator
 			return 'error';
 		}
 
-		if ($this->aLetter == '' && ($startLetter != '') {
+		if ($this->aLetter == '' && ($startLetter != '')) {
 			# if a start letter is defined, just filter the first name list, preserving the original list
 			$fnameList = $this->filterList($this->nameList,$startLetter);
 
